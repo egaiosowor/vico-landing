@@ -1,0 +1,126 @@
+@import "tailwindcss";
+
+@theme {
+  --color-vico-bg: #0D0D0D;
+  --color-vico-surface: #151929;
+  --color-vico-elev: #1e2438;
+  --color-vico-border: #2a324b;
+  --color-vico-amber: #ffab40;
+  --color-vico-cyan: #40c4ff;
+  --color-vico-mint: #69f0ae;
+}
+
+:root {
+  --bg: #0D0D0D;
+  --surface: #151929;
+  --elev: #1e2438;
+  --border: #2a324b;
+  --amber: #ffab40;
+  --cyan: #40c4ff;
+  --mint: #69f0ae;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg);
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Tactical Gradients and Phone Frame styles */
+.grad-text {
+  background: linear-gradient(90deg, #ffab40, #40c4ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #ffab40, #ffd740);
+  color: #0D0D0D;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(255, 171, 64, 0.35);
+}
+
+.phone-frame {
+  width: 270px;
+  aspect-ratio: 9 / 19.5;
+  border-radius: 40px;
+  border: 8px solid #1c1c1e;
+  background-color: var(--surface);
+  overflow: hidden;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55);
+  flex-shrink: 0;
+}
+
+.phone-frame-lg {
+  width: 300px;
+}
+
+.phone-frame-sm {
+  width: 190px;
+}
+
+.phone-frame img,
+.phone-frame video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.glow-cyan {
+  box-shadow: 0 0 80px rgba(64, 196, 255, 0.22), 0 30px 70px rgba(0, 0, 0, 0.55);
+}
+
+/* Scroll reveal transitions */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+
+/* Phone sized by viewport height (used by the pinned features section) */
+.phone-frame-fit {
+  width: auto;
+  height: min(520px, 58vh);
+  aspect-ratio: 9 / 19.5;
+}
+
+@media (min-width: 640px) {
+  .phone-frame-fit {
+    height: min(520px, 56vh);
+  }
+}
+
+@media (min-width: 768px) {
+  .phone-frame-fit {
+    height: min(720px, 80vh);
+  }
+}
+
+@media (min-width: 1024px) {
+  .phone-frame-fit {
+    height: min(780px, 84vh);
+  }
+}
+
+@media (min-width: 1280px) {
+  .phone-frame-fit {
+    height: min(840px, 86vh);
+  }
+}

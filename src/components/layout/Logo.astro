@@ -1,0 +1,23 @@
+---
+interface Props {
+  href?: string;
+  class?: string;
+  imgClass?: string;
+}
+
+const { href = "#top", class: className = "", imgClass = "w-20" } = Astro.props;
+---
+
+{href ? (
+  <a
+    href={href}
+    class={`flex items-center gap-2.5 font-extrabold text-xl text-white tracking-tight hover:opacity-90 transition-opacity ${className}`}
+  >
+    <img src="/assets/logo.png" alt="Vico logo" class={imgClass} />
+  </a>
+) : (
+  <div class={`flex items-center gap-2.5 ${className}`}>
+    <img src="/assets/logo.png" alt="Vico logo" class={imgClass} />
+  </div>
+)}
+
