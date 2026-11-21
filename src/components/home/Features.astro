@@ -1,15 +1,18 @@
 ---
-import { features } from '@data';
+import { features } from "@data";
 ---
 
 <section id="features" class="relative scroll-mt-16">
   <!-- Mobile Top Header (scrolls normally before the sticky features track) -->
   <div class="md:hidden w-full max-w-md mx-auto text-center px-4 pt-8 pb-14 sm:pb-16">
     <h2 class="text-3xl font-extrabold tracking-tight text-white leading-[1.18] mb-3">
-      See what’s happening.<br/><span class="text-white/40">Share what you know.</span>
+      See what’s happening.
+      <br />
+      <span class="text-white/40">Share what you know.</span>
     </h2>
     <p class="text-[#94a3b8] text-base leading-relaxed max-w-sm sm:max-w-md mx-auto">
-      See incidents shared by your community, understand what happened, and report what you witness.
+      See incidents shared by your community, understand what happened, and
+      report what you witness.
     </p>
   </div>
 
@@ -20,10 +23,13 @@ import { features } from '@data';
         <!-- Desktop Left: heading + selectable feature list (hidden on < md) -->
         <div class="hidden md:block w-full max-w-md lg:max-w-lg">
           <h2 class="text-3xl md:text-4xl lg:text-[42px] font-extrabold tracking-tight text-white leading-[1.2] mb-3 lg:mb-5">
-           See what’s happening.<br/><span class="text-white/40">Share what you know.</span>
+            See what’s happening.
+            <br />
+            <span class="text-white/40">Share what you know.</span>
           </h2>
           <p class="text-[#94a3b8] text-base leading-relaxed max-w-xl mb-6 lg:mb-8">
-          See incidents shared by your community, understand what happened, and report what you witness.
+            See incidents shared by your community, understand what happened,
+            and report what you witness.
           </p>
 
           <ul class="flex flex-col gap-2.5">
@@ -36,10 +42,20 @@ import { features } from '@data';
                   data-active={i === 0 ? "true" : "false"}
                 >
                   <span class="flex items-center gap-4">
-                    <svg class="feature-icon w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <svg
+                      class="feature-icon w-5 h-5 shrink-0"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
                       <path d={f.icon} />
                     </svg>
-                    <span class="feature-title text-base lg:text-lg font-medium">{f.title}</span>
+                    <span class="feature-title text-base lg:text-lg font-medium">
+                      {f.title}
+                    </span>
                   </span>
                   <span class="feature-body-wrap">
                     <span class="feature-body block overflow-hidden pl-9 text-sm lg:text-[0.95rem] leading-relaxed text-[#94a3b8]">
@@ -56,11 +72,22 @@ import { features } from '@data';
         <div class="shrink-0 flex items-center justify-center">
           <div class="phone-frame phone-frame-fit relative shadow-2xl shadow-black">
             {features.map((f, i) => (
-              <div class="feature-media absolute inset-0" data-active={i === 0 ? "true" : "false"}>
+              <div
+                class="feature-media absolute inset-0"
+                data-active={i === 0 ? "true" : "false"}
+              >
                 {f.media.type === "image" ? (
                   <img src={f.media.src} alt={f.media.alt} />
                 ) : (
-                  <video data-managed src={f.media.src} loop muted playsinline preload="auto" poster={f.media.poster}></video>
+                  <video
+                    data-managed
+                    src={f.media.src}
+                    loop
+                    muted
+                    playsinline
+                    preload="auto"
+                    poster={f.media.poster}
+                  ></video>
                 )}
               </div>
             ))}
@@ -70,8 +97,12 @@ import { features } from '@data';
         <!-- Mobile Bottom Card: Active Feature Title, Body & Step Indicator (visible on < md) -->
         <div class="md:hidden w-full max-w-sm text-center mt-3 px-2 flex flex-col items-center">
           {features.map((f, i) => (
-            <div class="mobile-feature-desc" data-index={i} data-active={i === 0 ? "true" : "false"}>
-              <p class="text-lg font-semibold text-white">{f.title}</p>
+            <div
+              class="mobile-feature-desc"
+              data-index={i}
+              data-active={i === 0 ? "true" : "false"}
+            >
+              <p class="text-xl font-semibold text-white">{f.title}</p>
               <p class="text-base text-[#94a3b8] mt-0.5">{f.body}</p>
             </div>
           ))}
@@ -159,25 +190,29 @@ import { features } from '@data';
 </style>
 
 <script>
-  const track = document.getElementById('features-track');
+  const track = document.getElementById("features-track");
   if (track) {
-    const items = track.querySelectorAll<HTMLElement>('.feature-item');
-    const mobileIndicators = track.querySelectorAll<HTMLElement>('.mobile-indicator');
-    const mobileDescs = track.querySelectorAll<HTMLElement>('.mobile-feature-desc');
-    const medias = track.querySelectorAll<HTMLElement>('.feature-media');
+    const items = track.querySelectorAll<HTMLElement>(".feature-item");
+    const mobileIndicators =
+      track.querySelectorAll<HTMLElement>(".mobile-indicator");
+    const mobileDescs = track.querySelectorAll<HTMLElement>(
+      ".mobile-feature-desc",
+    );
+    const medias = track.querySelectorAll<HTMLElement>(".feature-media");
     const count = items.length;
     let current = -1;
 
     const setActive = (index: number) => {
       if (index === current) return;
       current = index;
-      const flag = (el: HTMLElement, i: number) => el.setAttribute('data-active', String(i === index));
+      const flag = (el: HTMLElement, i: number) =>
+        el.setAttribute("data-active", String(i === index));
       items.forEach(flag);
       mobileIndicators.forEach(flag);
       mobileDescs.forEach(flag);
       medias.forEach(flag);
       medias.forEach((m, i) => {
-        const v = m.querySelector('video');
+        const v = m.querySelector("video");
         if (!v) return;
         if (i === index) {
           v.currentTime = 0;
@@ -193,22 +228,26 @@ import { features } from '@data';
     const update = () => {
       const rect = track.getBoundingClientRect();
       const total = scrollable();
-      const progress = total > 0 ? Math.min(1, Math.max(0, -rect.top / total)) : 0;
+      const progress =
+        total > 0 ? Math.min(1, Math.max(0, -rect.top / total)) : 0;
       setActive(Math.min(count - 1, Math.floor(progress * count)));
     };
 
     // Clicking either desktop item or mobile indicator scrolls to that feature
     const clickables = [...Array.from(items), ...Array.from(mobileIndicators)];
     clickables.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const idx = Number(btn.getAttribute('data-index') || '0');
+      btn.addEventListener("click", () => {
+        const idx = Number(btn.getAttribute("data-index") || "0");
         const trackTop = track.getBoundingClientRect().top + window.scrollY;
-        window.scrollTo({ top: trackTop + ((idx + 0.5) / count) * scrollable(), behavior: 'smooth' });
+        window.scrollTo({
+          top: trackTop + ((idx + 0.5) / count) * scrollable(),
+          behavior: "smooth",
+        });
       });
     });
 
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
     update();
   }
 </script>
