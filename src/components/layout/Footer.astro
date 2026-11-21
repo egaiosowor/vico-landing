@@ -1,0 +1,19 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+---
+
+<footer class={className}>
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <div class="border-t border-white/10 py-8 sm:py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-[#94a3b8] text-sm">
+      <span>© <span id="year">{new Date().getFullYear()}</span> Vico. All rights reserved.</span>
+      <span>
+        Developed by <a href="https://egaiosowor.com" target="_blank" rel="noopener noreferrer" class="text-white hover:text-white/80 underline underline-offset-4 transition-colors font-medium">Egai-Osowor</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
