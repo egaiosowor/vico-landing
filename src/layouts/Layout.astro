@@ -1,68 +1,153 @@
 ---
-import '@styles/global.css';
-import Header from '@components/layout/Header.astro';
-import Footer from '@components/layout/Footer.astro';
+import "@styles/global.css";
+import Header from "@components/layout/Header.astro";
+import Footer from "@components/layout/Footer.astro";
 
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
 }
 
 const {
-  title = "Vico — Neighborhood safety, verified on video",
-  description = "Vico is a video-first community safety network. See what's happening around you, in real time, verified by your neighbors."
+  title = "Vico",
+  description = "Vico is a community safety network where people share real incidents, backed by video and verified by the people around them.",
+  image = "/assets/og-image.png",
 } = Astro.props;
+
+const siteUrl =
+  Astro.site?.href.replace(/\/$/, "") || "https://getvico.vercel.app";
+const canonicalURL = new URL(Astro.url.pathname, siteUrl).href;
+const ogImageURL = new URL(image, siteUrl).href;
+
+const schemaData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      url: siteUrl,
+      name: "Vico",
+      description: description,
+      inLanguage: "en-US",
+    },
+    {
+      "@type": "Organization",
+      "@id": `${siteUrl}/#organization`,
+      name: "Vico",
+      url: siteUrl,
+      logo: {
+        "@type": "ImageObject",
+        url: `${siteUrl}/assets/logo.png`,
+      },
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": `${siteUrl}/#software`,
+      name: "Vico",
+      applicationCategory: "SecurityApplication",
+      operatingSystem: "iOS, Android",
+      description: description,
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+    },
+  ],
+};
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{title}</title>
-  <meta name="description" content={description} />
-  <link rel="icon" href="/assets/logo.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-</head>
-<body class="bg-[#0D0D0D] text-white selection:bg-[#ffab40]/30 selection:text-[#ffab40]">
-  <!-- Navigation Bar -->
-  <Header />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#0D0D0D" />
+    <link rel="canonical" href={canonicalURL} />
 
-  <!-- Page Content -->
-  <slot />
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Vico" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Vico — Neighborhood safety, verified on video"
+    />
+    <meta property="og:locale" content="en_US" />
 
-  <!-- Footer -->
-  <Footer />
+    <!-- Twitter / X Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+    <meta
+      name="twitter:image:alt"
+      content="Vico — Neighborhood safety, verified on video"
+    />
 
-  <script>
-    // Demo button handler
-    const DEMO_URL = '#';
-    document.querySelectorAll('.demo-link').forEach((a) => (a.setAttribute('href', DEMO_URL)));
+    <!-- Icons & Fonts -->
+    <link rel="icon" href="/assets/logo.png" />
+    <link rel="apple-touch-icon" href="/assets/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
 
-    // Autoplay safeguard for looping phone videos
-    document.querySelectorAll('.phone-frame video:not([data-managed])').forEach((video) => {
-      const v = video as HTMLVideoElement;
-      v.play().catch(() => {});
-    });
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
+  </head>
+  <body class="bg-[#0D0D0D] text-white selection:bg-[#ffab40]/30 selection:text-[#ffab40]">
+    <!-- Navigation Bar -->
+    <Header />
 
-    // Intersection observer for smooth scroll reveals
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add('in');
-          }
+    <!-- Page Content -->
+    <slot />
+
+    <!-- Footer -->
+    <Footer />
+
+    <script>
+      // Demo button handler
+      const DEMO_URL = "#";
+      document
+        .querySelectorAll(".demo-link")
+        .forEach((a) => a.setAttribute("href", DEMO_URL));
+
+      // Autoplay safeguard for looping phone videos
+      document
+        .querySelectorAll(".phone-frame video:not([data-managed])")
+        .forEach((video) => {
+          const v = video as HTMLVideoElement;
+          v.play().catch(() => {});
         });
-      },
-      { threshold: 0.15 }
-    );
 
-    document.querySelectorAll('.reveal').forEach((el) => {
-      io.observe(el);
-    });
-  </script>
-</body>
+      // Intersection observer for smooth scroll reveals
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+            }
+          });
+        },
+        { threshold: 0.15 },
+      );
+
+      document.querySelectorAll(".reveal").forEach((el) => {
+        io.observe(el);
+      });
+    </script>
+  </body>
 </html>
-

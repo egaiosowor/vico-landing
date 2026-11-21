@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://getvico.vercel.app/sitemap-index.xml
+
